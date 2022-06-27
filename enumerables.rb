@@ -62,8 +62,9 @@ class Array
     
     def my_zip(*args)
         new_arr=[]
-        (0...args.length+1).each do |i|
-            temp=[self[i]]
+
+        (0...self.length).each do |i|
+            temp=[self[i]] # original element of array
             args.each do |arg|
                 temp << arg[i]
             end
@@ -72,14 +73,32 @@ class Array
         new_arr
     end
 
+    def my_rotate(num = 1)
+        new_arr = self.dup
+
+        if num == 0
+            return new_arr
+        elsif num > 0
+            num.times do 
+                new_arr << new_arr.shift
+            end
+        else
+            (num * -1).times do
+                new_arr.unshift(new_arr.pop)
+            end
+        end
+
+        new_arr
+    end
+
+    def my_join(str = "")
+        new_str = ""
+
+        self.each do |ele|
+            new_str += (ele + str)
+        end
+        
+        new_str
+    end
+
 end
-
-a = [ 4, 5, 6 ]
-b = [ 7, 8, 9 ]
-p [1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
-p a.my_zip([1,2], [8])   # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
-p [1, 2].my_zip(a, b)    # => [[1, 4, 7], [2, 5, 8]]
-
-c = [10, 11, 12]
-d = [13, 14, 15]
-p [1, 2].my_zip(a, b, c, d)    # => [[1, 4, 7, 10, 13], [2, 5, 8, 11, 14]]
