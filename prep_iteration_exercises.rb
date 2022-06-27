@@ -14,7 +14,7 @@ def factors(num)
 end
 
 
-p factors(36)
+# p factors(36)
 
 # ### Bubble Sort
 #
@@ -57,11 +57,28 @@ p factors(36)
 
 class Array
   def bubble_sort!(&prc)
+    sorted=false
+    i = 0
+    while sorted == false
+      sorted = true
+      while i<self.length-1
+        if prc.call(self[i], self[i+1]) == 1
+          self[i], self[i+1] = self[i+1], self[i]
+          sorted = false
+        end
+        i += 1
+      end
+    end
+    self
   end
 
   def bubble_sort(&prc)
   end
 end
+
+
+p [1,3,7,4,2].bubble_sort! { |num1, num2| num1 <=> num2 }
+p [1,3,7,4,2].bubble_sort! { |num1, num2| num2 <=> num1 }
 
 # ### Substrings and Subwords
 #
