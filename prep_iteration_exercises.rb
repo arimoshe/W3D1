@@ -61,6 +61,8 @@ class Array
     i = 0
     while sorted == false
       sorted = true
+
+      i = 0
       while i<self.length-1
         if prc.call(self[i], self[i+1]) == 1
           self[i], self[i+1] = self[i+1], self[i]
@@ -69,16 +71,30 @@ class Array
         i += 1
       end
     end
+    
     self
   end
 
   def bubble_sort(&prc)
+    new_self = self.dup
+    sorted=false
+    i = 0
+    while sorted == false
+      sorted = true
+
+      i = 0
+      while i<new_self.length-1
+        if prc.call(new_self[i], new_self[i+1]) == 1
+          new_self[i], new_self[i+1] = new_self[i+1], new_self[i]
+          sorted = false
+        end
+        i += 1
+      end
+    end
+    
+    new_self
   end
 end
-
-
-p [1,3,7,4,2].bubble_sort! { |num1, num2| num1 <=> num2 }
-p [1,3,7,4,2].bubble_sort! { |num1, num2| num2 <=> num1 }
 
 # ### Substrings and Subwords
 #
@@ -94,10 +110,27 @@ p [1,3,7,4,2].bubble_sort! { |num1, num2| num2 <=> num1 }
 # words).
 
 def substrings(string)
+  new_arr = []
+
+  (0...string.length).each do |i|
+    (i...string.length).each do |k|
+      new_arr << string[i..k]
+    end
+  end
+
+  new_arr
 end
 
+# p substrings("cat")
+
 def subwords(word, dictionary)
+  substrings(word).map do |substring|
+    substring if dictionary.include?(substring)
+  end.compact
+
 end
+
+p subwords("cat", ["a", "at", "cat", "banana"])
 
 # ### Doubler
 # Write a `doubler` method that takes an array of integers and returns an
