@@ -101,4 +101,19 @@ class Array
         new_str
     end
 
+    def my_reverse
+        new_arr = []
+        i=self.length-1
+        while i >= 0
+            new_arr << self[i]
+            i -= 1
+        end
+        new_arr
+    end
+
+    def 
+
 end
+
+p [ "a", "b", "c" ].my_reverse   #=> ["c", "b", "a"]
+p [ 1 ].my_reverse               #=> [1]
